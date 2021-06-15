@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger, getRandomPositiveFloat, getRandomItemsFromArr} from './utils.js';
+import {getRandomPositiveInteger, getRandomPositiveFloat, getRandomItemsFromArr} from '../services/utils.js';
 
 const USERS = ['user01', 'user02', 'user03', 'user04', 'user05', 'user06', 'user07', 'user08'];
 const HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];

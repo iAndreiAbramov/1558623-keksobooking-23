@@ -1,4 +1,6 @@
-import {generateAdsArray} from './modules/get-service-data.js';
+import {generateAdsHTML} from './modules/generate-ads-html.js';
 
-// eslint-disable-next-line no-console
-console.log(generateAdsArray(10));
+
+window.addEventListener('DOMContentLoaded', () => {
+  generateAdsHTML(3);
+});
