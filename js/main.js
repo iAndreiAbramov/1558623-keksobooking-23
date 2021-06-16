@@ -7,6 +7,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   disableForms();
   // Для проверки работоспособности функции включения форм
-  // временно предусмотрена их активация при клике в произвольном месте
-  document.body.addEventListener('click', enableForms);
+  // временно предусмотрена их активация при клике в область над картой
+  document.querySelector('.promo').addEventListener('click', enableForms);
 });
