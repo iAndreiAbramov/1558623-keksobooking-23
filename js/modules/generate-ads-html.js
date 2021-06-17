@@ -123,10 +123,6 @@ const generateAdsHTML = (numberOfAds) => {
 
     canvas.appendChild(offerHtml);
   }
-
-  // eslint-disable-next-line no-console
-  console.log(adData);
-
 };
 
 export {generateAdsHTML};
