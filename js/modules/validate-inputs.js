@@ -12,6 +12,25 @@ const validateInputs = () => {
     'house': 5000,
     'palace': 10000,
   };
+  const roomNumber = adForm.querySelector('#room_number');
+  const capacity = adForm.querySelector('#capacity');
+  const capacityOptions = {
+    1: `
+    <option value="1" selected>для 1 гостя</option>
+    `,
+    2: `
+    <option value="1" selected>для 1 гостя</option>
+    <option value="2">для 2 гостей</option>
+    `,
+    3: `
+    <option value="1" selected>для 1 гостя</option>
+    <option value="2">для 2 гостей</option>
+    <option value="3">для 3 гостей</option>
+    `,
+    100: `
+    <option value="0" selected>не для гостей</option>
+    `,
+  };
 
   const validateLength = (field) => {
     const length = field.value.length;
@@ -37,8 +56,12 @@ const validateInputs = () => {
     field.reportValidity();
   };
 
-  const synchronizeSelects = (mainField, dependentField) => {
+  const synchronizeTimeSelects = (mainField, dependentField) => {
     dependentField.value = mainField.value;
+  };
+
+  const synchronizeCapacitySelects = (mainField, dependentField) => {
+    dependentField.innerHTML = capacityOptions[mainField.value];
   };
 
   const mapPriceWithType = (mapObject) => {
@@ -47,16 +70,17 @@ const validateInputs = () => {
   };
 
   mapPriceWithType(minPrices);
+  synchronizeCapacitySelects(roomNumber, capacity);
 
   title.addEventListener('input', () => validateLength(title));
 
-  timein.addEventListener('change', () => synchronizeSelects(timein, timeout));
-  timeout.addEventListener('change', () => synchronizeSelects(timeout, timein));
+  timein.addEventListener('change', () => synchronizeTimeSelects(timein, timeout));
+  timeout.addEventListener('change', () => synchronizeTimeSelects(timeout, timein));
 
   type.addEventListener('change', () => mapPriceWithType(minPrices));
   price.addEventListener('input', () => validateNumber(price, minPrices[type.value], price.getAttribute('max')));
 
-
+  roomNumber.addEventListener('change', () => synchronizeCapacitySelects(roomNumber, capacity));
 };
 
 export {validateInputs};
