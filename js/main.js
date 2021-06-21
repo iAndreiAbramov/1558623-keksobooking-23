@@ -7,8 +7,8 @@ window.addEventListener('DOMContentLoaded', () => {
   generateAdsHTML(3);
   replaceSubmitHandler('.ad-form');
 
-  // disableForms();
+  disableForms();
   // Для проверки работоспособности функции включения форм
   // временно предусмотрена их активация при клике в область над картой
-  // document.querySelector('.promo').addEventListener('click', enableForms);
+  document.querySelector('.promo').addEventListener('click', enableForms);
 });
