@@ -40,7 +40,6 @@ const validateInputs = (formSelector) => {
     } else {
       field.setCustomValidity('');
     }
-
     field.reportValidity();
   };
 
@@ -52,7 +51,6 @@ const validateInputs = (formSelector) => {
     } else {
       field.setCustomValidity('');
     }
-
     field.reportValidity();
   };
 
