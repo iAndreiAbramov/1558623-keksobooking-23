@@ -2,7 +2,6 @@ import { generateAdsHTML } from './modules/generate-ads-html.js';
 import { disableForms, enableForms } from './modules/init.js';
 import { replaceSubmitHandler } from './modules/forms.js';
 
-
 window.addEventListener('DOMContentLoaded', () => {
   generateAdsHTML(3);
   replaceSubmitHandler('.ad-form');
