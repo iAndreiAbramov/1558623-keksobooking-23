@@ -84,19 +84,22 @@ const validateInputs = (formSelector) => {
 
 };
 
-const checkInputs = (formSelector) => {
-  const form = document.querySelector(formSelector);
-  const inputs = form.querySelectorAll('input');
-  let isValid = true;
+// Функция ниже пока не требуется, поскольку отправки формы не происходит и без нее.
+// Пока оставлю, возможно в будущем понадобится.
 
-  inputs.forEach((input) => {
-    if (!input.checkValidity()) {
-      isValid = false;
-      input.style.outline = '2px solid red';
-    }
-  });
+// const checkInputs = (formSelector) => {
+//   const form = document.querySelector(formSelector);
+//   const inputs = form.querySelectorAll('input');
+//   let isValid = true;
 
-  return isValid;
-};
+//   inputs.forEach((input) => {
+//     if (!input.checkValidity()) {
+//       isValid = false;
+//       input.style.outline = '2px solid red';
+//     }
+//   });
 
-export {validateInputs, checkInputs};
+//   return isValid;
+// };
+
+export {validateInputs};
