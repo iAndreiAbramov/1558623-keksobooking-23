@@ -1,4 +1,4 @@
-import {validateInputs} from './validate-inputs.js';
+import {validateInputs} from './inputs.js';
 
 const disableForms = () => {
   const adForm = document.querySelector('.ad-form');
@@ -16,6 +16,6 @@ const enableForms = () => {
   filtersForm.classList.remove('map__filters--disabled');
 };
 
-validateInputs();
+validateInputs('.ad-form');
 
 export {disableForms, enableForms};
