@@ -2,7 +2,6 @@ import {generateAdsArray} from './get-service-data.js';
 
 const generateAdsHTML = (numberOfAds) => {
   const adData = generateAdsArray(numberOfAds);
-  const canvas = document.querySelector('#map-canvas');
   const adTemplate = document.querySelector('#card').content.querySelector('.popup');
   const typesMap = {
     'flat': 'Квартира',
@@ -11,10 +10,6 @@ const generateAdsHTML = (numberOfAds) => {
     'palace': 'Дворец',
     'hotel': 'Отель',
   };
-
-  canvas.style.display = 'flex';
-  canvas.style.justifyContent = 'space-around';
-  canvas.style.padding = '10px';
 
   for (let i = 0; i < numberOfAds; i++) {
     const offerHtml = adTemplate.cloneNode(true);
@@ -121,7 +116,7 @@ const generateAdsHTML = (numberOfAds) => {
       });
     }
 
-    canvas.appendChild(offerHtml);
+    return offerHtml;
   }
 };
 
