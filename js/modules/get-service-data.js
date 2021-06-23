@@ -26,7 +26,7 @@ const getNewAd = (currentUser) => {
     },
     offer: {
       title: 'Только лучшие апартаменты!',
-      address: 'location.x, location.y',
+      address: [getRandomPositiveFloat(LATITUDES.min, LATITUDES.max, 5), getRandomPositiveFloat(LONGITUDES.min, LONGITUDES.max, 5)],
     },
     price: getRandomPositiveInteger(0, 10000),
     type: HOUSING_TYPES[getRandomPositiveInteger(0, HOUSING_TYPES.length - 1)],
