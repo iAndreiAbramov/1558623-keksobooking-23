@@ -1,4 +1,8 @@
-const showErrorMessage = (message) => {
+
+
+const filterAds = (adsArray) => adsArray.slice(0, 10);
+
+const showLoadFailMessage = (message) => {
   const mapCanvas = document.querySelector('.map__canvas');
 
   const errorMessageBlock = document.createElement('div');
@@ -6,7 +10,7 @@ const showErrorMessage = (message) => {
     position: relative;
     display: flex;
     height: 100%;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     z-index: 999;
     color: black;
@@ -18,18 +22,19 @@ const showErrorMessage = (message) => {
   mapCanvas.appendChild(errorMessageBlock);
 };
 
-const getAds = () => {
-  const ads = fetch('https://23.javascript.pages.academy/keksobooking/data')
+const getData = async (url, onSuccess, onError) => {
+  const ads = await fetch(url)
     .then((response) => {
       if (response.ok) {
         return response;
       }
-      showErrorMessage('Данные недоступны, повторите попытку позднее...');
+      onError(`Ошибка ${response.status}, не удалось получить данные с сервера...`);
     })
     .then((response) => response.json())
-    .catch(() => showErrorMessage('Данные недоступны, повторите попытку позднее...'));
+    .then((data) => onSuccess(data))
+    .catch(() => onError('Сервер недоступен, повторите попытку позднее...'));
 
-  return ads;
+  return await ads;
 };
 
-export { getAds };
+export { getData, filterAds, showLoadFailMessage };

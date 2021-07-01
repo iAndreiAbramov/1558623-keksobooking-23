@@ -1,5 +1,6 @@
 import { enableForms } from '../modules/init.js';
-import { generateAdsHTML } from './generate-ads-html.js';
+import { adDataToHTML } from './ad-data-to-html.js';
+import { getData, filterAds, showLoadFailMessage } from '../services/get-data.js';
 
 const FRAME_CENTER_COORDS = {
   lat: 35.67500,
@@ -27,6 +28,33 @@ const mainMarker = L.marker(
   },
 );
 
+const secondaryMarkerIcon = L.icon({
+  iconUrl: './img/leaflet-img/marker-icon.png',
+  iconSize: SECONDARY_MARKER_SIZE,
+  iconAnchor: [SECONDARY_MARKER_SIZE[0] / 2, SECONDARY_MARKER_SIZE[1]],
+  shadowUrl: './img/leaflet-img/marker-shadow.png',
+  shadowSize: [SECONDARY_MARKER_SIZE[0] * 2, SECONDARY_MARKER_SIZE[1] * 2],
+  shadowAnchor: [SECONDARY_MARKER_SIZE[0] / 2, SECONDARY_MARKER_SIZE[1] * 2],
+});
+
+const generateSimilarAds = () => {
+  const adsData = getData('https://23.javascript.pages.academy/keksobooking/data', filterAds, showLoadFailMessage);
+  adsData.then((dataArray) => {
+    dataArray.forEach((dataItem) => {
+      const adHTML = adDataToHTML(dataItem);
+      const secondaryMarkerCoords = dataItem.location;
+      const newLayer = L.layerGroup().addTo(map);
+      const secondaryMarker = L.marker(
+        secondaryMarkerCoords,
+        {
+          icon: secondaryMarkerIcon,
+        },
+      );
+      secondaryMarker.addTo(newLayer).bindPopup(adHTML);
+    });
+  });
+};
+
 const loadMap = () => {
   map.on('load', enableForms)
     .setView(FRAME_CENTER_COORDS, 13);
@@ -49,6 +77,8 @@ const loadMap = () => {
     const longitude = latLng.lng.toFixed(5);
     addressInput.value = `${latitude}, ${longitude}`;
   });
+
+  generateSimilarAds();
 };
 
 // const resetMap = () => {
@@ -56,28 +86,4 @@ const loadMap = () => {
 //   mainMarker.setLatLng(FRAME_CENTER_COORDS);
 // };
 
-const secondaryMarkerIcon = L.icon({
-  iconUrl: './img/leaflet-img/marker-icon.png',
-  iconSize: SECONDARY_MARKER_SIZE,
-  iconAnchor: [SECONDARY_MARKER_SIZE[0] / 2, SECONDARY_MARKER_SIZE[1]],
-  shadowUrl: './img/leaflet-img/marker-shadow.png',
-  shadowSize: [SECONDARY_MARKER_SIZE[0] * 2, SECONDARY_MARKER_SIZE[1] * 2],
-  shadowAnchor: [SECONDARY_MARKER_SIZE[0] / 2, SECONDARY_MARKER_SIZE[1] * 2],
-});
-
-const generateSimilarAds = (numberOfAds) => {
-  for (let i = 0; i < numberOfAds; i++) {
-    const popupHTML = generateAdsHTML(1);
-    const secondaryMarkerCoords = popupHTML.querySelector('.popup__text--address').textContent.split(',');
-    const newLayer = L.layerGroup().addTo(map);
-    const secondaryMarker = L.marker(
-      secondaryMarkerCoords,
-      {
-        icon: secondaryMarkerIcon,
-      },
-    );
-    secondaryMarker.addTo(newLayer).bindPopup(popupHTML);
-  }
-};
-
-export { loadMap, generateSimilarAds };
+export { loadMap };
