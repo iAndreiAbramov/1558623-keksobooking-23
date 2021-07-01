@@ -8,14 +8,20 @@ const showLoadFailMessage = (message) => {
   const errorMessageBlock = document.createElement('div');
   errorMessageBlock.style.cssText = `
     position: relative;
+    margin: 10px auto;
     display: flex;
-    height: 100%;
-    align-items: flex-start;
+    width: 70%;
+    height: 10%;
+    align-items: center;
     justify-content: center;
+    background-color: #f0f0ea;
+    border-radius: 20px;
+    border: 1px solid #cb2020;
     z-index: 999;
-    color: black;
+    color: #353535;
     text-align: center;
-    font-size: 5em;
+    font-size: 2em;
+    line-height: 1em;
     font-weight: bold;
   `;
   errorMessageBlock.innerText = message;
@@ -28,13 +34,13 @@ const getData = async (url, onSuccess, onError) => {
       if (response.ok) {
         return response;
       }
-      onError(`Ошибка ${response.status}, не удалось получить данные с сервера...`);
+      throw new Error(`Ошибка ${response.status}, не удалось получить данные с сервера...`);
     })
     .then((response) => response.json())
     .then((data) => onSuccess(data))
-    .catch(() => onError('Сервер недоступен, повторите попытку позднее...'));
+    .catch((err) => onError(err.message));
 
-  return await ads;
+  return await ads || [];
 };
 
 export { getData, filterAds, showLoadFailMessage };
