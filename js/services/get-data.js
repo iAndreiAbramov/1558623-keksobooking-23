@@ -1,5 +1,4 @@
-
-
+// В этой функции будет фильтрация объявлений по параметрам
 const filterAds = (adsArray) => adsArray.slice(0, 10);
 
 const showLoadFailMessage = (message) => {

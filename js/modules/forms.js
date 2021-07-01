@@ -1,15 +1,33 @@
-import {validateInputs} from './inputs.js';
-validateInputs('.ad-form');
+import { validateInputs, resetInputs } from './inputs.js';
+import { postData } from '../services/post-data.js';
+import { showMessage } from './show-status-message.js';
+import { resetMap } from './map-leaflet.js';
 
+validateInputs('.ad-form');
 
 const replaceSubmitHandler = (formSelector) => {
   const form = document.querySelector(formSelector);
 
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
-    // Если введенные данные корректны, то здесь будет запускаться функция, отправляющая данные на сервер (будет реализована позже).
+    const formData = new FormData(form);
+    postData('https://23.javascript.pages.academy/keksobooking', formData)
+      .then((res) => {
+        showMessage('body', res.ok);
+        if (res.ok) {
+          resetInputs(form);
+        }
+      });
   });
 };
 
-export {replaceSubmitHandler};
+const replaceResetHandler = (formSelector) => {
+  const form = document.querySelector(formSelector);
+  const resetButton = form.querySelector('[type="reset"]');
+
+  resetButton.addEventListener('click', () => {
+    setTimeout(resetMap, 0);
+  });
+};
+
+export { replaceSubmitHandler, replaceResetHandler };

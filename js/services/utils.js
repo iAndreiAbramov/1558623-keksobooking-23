@@ -26,4 +26,6 @@ const getRandomPositiveFloat = (min, max, decimalsNumber) => {
 
 const getRandomItemsFromArr = (array) => array.filter(() => getRandomPositiveInteger(0, 1) === 1);
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomItemsFromArr};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomItemsFromArr, isEscEvent};

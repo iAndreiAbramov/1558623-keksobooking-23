@@ -79,25 +79,11 @@ const validateInputs = (formSelector) => {
   price.addEventListener('input', () => validateNumber(price, minPrices[type.value], price.getAttribute('max')));
 
   roomNumber.addEventListener('change', () => synchronizeCapacitySelects(roomNumber, capacity));
-
 };
 
-// Функция ниже пока не требуется, поскольку отправки формы не происходит и без нее.
-// Пока оставлю, возможно в будущем понадобится.
+const resetInputs = (form) => {
+  const resetButton = form.querySelector('[type="reset"]');
+  resetButton.click();
+};
 
-// const checkInputs = (formSelector) => {
-//   const form = document.querySelector(formSelector);
-//   const inputs = form.querySelectorAll('input');
-//   let isValid = true;
-
-//   inputs.forEach((input) => {
-//     if (!input.checkValidity()) {
-//       isValid = false;
-//       input.style.outline = '2px solid red';
-//     }
-//   });
-
-//   return isValid;
-// };
-
-export {validateInputs};
+export { validateInputs, resetInputs };
