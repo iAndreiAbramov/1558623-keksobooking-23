@@ -3,9 +3,9 @@ import { isEscEvent } from '../services/utils.js';
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
-const showMessage = (parentSelector, isSucess) => {
+const showMessage = (parentSelector, isSucсess) => {
   const parentElement = document.querySelector(parentSelector);
-  const message = (isSucess) ? successMessage : errorMessage;
+  const message = (isSucсess) ? successMessage : errorMessage;
   parentElement.appendChild(message);
 
   const onMessageEscKeydown = (evt) => {

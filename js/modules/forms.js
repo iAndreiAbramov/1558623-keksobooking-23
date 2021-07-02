@@ -1,9 +1,9 @@
-import { validateInputs, resetInputs } from './inputs.js';
+import { resetInputs } from './inputs.js';
 import { postData } from '../services/post-data.js';
 import { showMessage } from './show-status-message.js';
 import { resetMap } from './map-leaflet.js';
 
-validateInputs('.ad-form');
+const SEND_FORM_URL = 'https://23.javascript.pages.academy/keksobooking';
 
 const replaceSubmitHandler = (formSelector) => {
   const form = document.querySelector(formSelector);
@@ -11,7 +11,7 @@ const replaceSubmitHandler = (formSelector) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const formData = new FormData(form);
-    postData('https://23.javascript.pages.academy/keksobooking', formData)
+    postData(SEND_FORM_URL, formData)
       .then((res) => {
         showMessage('body', res.ok);
         if (res.ok) {

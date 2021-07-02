@@ -38,41 +38,55 @@ const adDataToHTML = (offerData) => {
   }
 
   // Цена
-  if (!offerData.price) {
+  if (!offerData.offer.price) {
     offerPrice.remove();
   } else {
     offerPrice.innerHTML = `
-        ${offerData.price} <span>₽/ночь</span>
+        ${offerData.offer.price} <span>₽/ночь</span>
       `;
   }
 
   // Тип жилья
-  if (!offerData.type) {
+  if (!offerData.offer.type) {
     offerType.remove();
   } else {
-    offerType.textContent = typesMap[offerData.type];
+    offerType.textContent = typesMap[offerData.offer.type];
   }
 
   // Вместимость
-  if (!offerData.rooms && !offerData.guests) {
+  const roomsTextCorrection = {
+    1: 'комната',
+    2: 'комнаты',
+    3: 'комнаты',
+    4: 'комнаты',
+  };
+
+  const guestsTextCorrection = {
+    1: 'гостя',
+  };
+
+  if (!offerData.offer.rooms && !offerData.offer.guests) {
     offerCapacity.remove();
   } else {
     let roomsCorrectText = 'комнат';
-    if (offerData.rooms === 1) {
-      roomsCorrectText = 'комната';
+    if (offerData.offer.rooms <= Object.keys(roomsTextCorrection).length) {
+      roomsCorrectText = roomsTextCorrection[offerData.offer.rooms];
     }
-    if (offerData.rooms > 1 && offerData.rooms < 5) {
-      roomsCorrectText = 'комнаты';
+
+    let guestsCorrectText = 'гостей';
+    if (offerData.offer.guests <= Object.keys(guestsTextCorrection).length) {
+      guestsCorrectText = guestsTextCorrection[offerData.offer.guests];
     }
-    offerCapacity.textContent = `${offerData.rooms} ${roomsCorrectText} для ${offerData.guests} гостей`;
+
+    offerCapacity.textContent = `${offerData.offer.rooms} ${roomsCorrectText} для ${offerData.offer.guests} ${guestsCorrectText}`;
   }
 
   // Въезд - выезд
-  if (!offerData.checkin && !offerData.checkout) {
+  if (!offerData.offer.checkin && !offerData.offer.checkout) {
     offerCheckInOut.remove();
   } else {
     offerCheckInOut.textContent = `
-        Заезд после ${offerData.checkin}, выезд до ${offerData.checkout};
+        Заезд после ${offerData.offer.checkin}, выезд до ${offerData.offer.checkout};
       `;
   }
 

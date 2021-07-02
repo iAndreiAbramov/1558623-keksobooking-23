@@ -2,6 +2,8 @@ import { enableForms } from '../modules/init.js';
 import { adDataToHTML } from './ad-data-to-html.js';
 import { getData, filterAds, showLoadFailMessage } from '../services/get-data.js';
 
+const REQUEST_ADS_URL = 'https://23.javascript.pages.academy/keksobooking/data';
+
 const FRAME_CENTER_COORDS = {
   lat: 35.67500,
   lng: 139.75000,
@@ -38,7 +40,7 @@ const secondaryMarkerIcon = L.icon({
 });
 
 const generateSimilarAds = () => {
-  const adsData = getData('https://23.javascript.pages.academy/keksobooking/data', filterAds, showLoadFailMessage);
+  const adsData = getData(REQUEST_ADS_URL, filterAds, showLoadFailMessage);
   adsData.then((dataArray) => {
     dataArray.forEach((dataItem) => {
       const adHTML = adDataToHTML(dataItem);
