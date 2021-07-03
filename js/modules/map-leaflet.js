@@ -1,17 +1,11 @@
 import { enableForms } from '../modules/init.js';
 import { adDataToHTML } from './ad-data-to-html.js';
-import { getData, showLoadFailMessage } from '../services/get-data.js';
-
-const REQUEST_ADS_URL = 'https://23.javascript.pages.academy/keksobooking/data';
-
-const FRAME_CENTER_COORDS = {
-  lat: 35.67500,
-  lng: 139.75000,
-};
-const MAIN_MARKER_SIZE = [52, 52];
-const SECONDARY_MARKER_SIZE = [40, 40];
+import { getData, showLoadFailMessage, cachedData } from '../services/get-data.js';
+import { filterData } from './filters.js';
+import { FRAME_CENTER_COORDS, MAIN_MARKER_SIZE, SECONDARY_MARKER_SIZE, ADS_NUMBER_TO_SHOW } from '../settings/settings.js';
 
 const map = L.map('map-canvas');
+const markersLayer = L.layerGroup().addTo(map);
 const addressInput = document.querySelector('#address');
 
 const mainMarkerIcon = L.icon({
@@ -39,21 +33,38 @@ const secondaryMarkerIcon = L.icon({
   shadowAnchor: [SECONDARY_MARKER_SIZE[0] / 2, SECONDARY_MARKER_SIZE[1] * 2],
 });
 
-const generateSimilarAds = () => {
-  const adsData = getData(REQUEST_ADS_URL, showLoadFailMessage);
-  adsData.then((dataArray) => {
-    dataArray.forEach((dataItem) => {
-      const adHTML = adDataToHTML(dataItem);
-      const secondaryMarkerCoords = dataItem.location;
-      const newLayer = L.layerGroup().addTo(map);
-      const secondaryMarker = L.marker(
-        secondaryMarkerCoords,
-        {
-          icon: secondaryMarkerIcon,
-        },
-      );
-      secondaryMarker.addTo(newLayer).bindPopup(adHTML);
+const generateSimilarAds = (numberOfAds) => {
+  const adsData = getData(showLoadFailMessage);
+  adsData
+    .then((dataArray) => dataArray.slice(0, numberOfAds))
+    .then((dataArray) => {
+      dataArray.forEach((dataItem) => {
+        const adHTML = adDataToHTML(dataItem);
+        const secondaryMarkerCoords = dataItem.location;
+        const secondaryMarker = L.marker(
+          secondaryMarkerCoords,
+          {
+            icon: secondaryMarkerIcon,
+          },
+        );
+        secondaryMarker.addTo(markersLayer).bindPopup(adHTML);
+      });
     });
+};
+
+const renderAdsFromCache = (numberOfAds) => {
+  markersLayer.clearLayers();
+  const adsData = filterData(cachedData, numberOfAds);
+  adsData.forEach((dataItem) => {
+    const adHTML = adDataToHTML(dataItem);
+    const secondaryMarkerCoords = dataItem.location;
+    const secondaryMarker = L.marker(
+      secondaryMarkerCoords,
+      {
+        icon: secondaryMarkerIcon,
+      },
+    );
+    secondaryMarker.addTo(markersLayer).bindPopup(adHTML);
   });
 };
 
@@ -80,7 +91,7 @@ const loadMap = () => {
     addressInput.value = `${latitude}, ${longitude}`;
   });
 
-  generateSimilarAds();
+  generateSimilarAds(ADS_NUMBER_TO_SHOW);
 };
 
 const resetMap = () => {
@@ -89,4 +100,4 @@ const resetMap = () => {
   addressInput.value = `${FRAME_CENTER_COORDS.lat.toFixed(5)}, ${FRAME_CENTER_COORDS.lng.toFixed(5)}`;
 };
 
-export { loadMap, resetMap };
+export { loadMap, resetMap, renderAdsFromCache };

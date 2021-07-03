@@ -10,5 +10,5 @@ window.addEventListener('DOMContentLoaded', () => {
   validateInputs('.ad-form');
   replaceSubmitHandler('.ad-form');
   replaceResetHandler('.ad-form');
-  setFilterChangeHandler('.map__filters');
+  setFilterChangeHandler();
 });
