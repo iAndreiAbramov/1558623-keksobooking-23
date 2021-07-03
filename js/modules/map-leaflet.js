@@ -1,4 +1,4 @@
-import { enableForms } from '../modules/init.js';
+import { enableForm, enableFilters } from '../modules/init.js';
 import { adDataToHTML } from './ad-data-to-html.js';
 import { getData, showLoadFailMessage, cachedData } from '../services/get-data.js';
 import { filterData } from './filters.js';
@@ -49,7 +49,8 @@ const generateSimilarAds = (numberOfAds) => {
         );
         secondaryMarker.addTo(markersLayer).bindPopup(adHTML);
       });
-    });
+    })
+    .then(() => enableFilters());
 };
 
 const renderAdsFromCache = (numberOfAds) => {
@@ -69,7 +70,7 @@ const renderAdsFromCache = (numberOfAds) => {
 };
 
 const loadMap = () => {
-  map.on('load', enableForms)
+  map.on('load', enableForm)
     .setView(FRAME_CENTER_COORDS, 13);
 
   L.tileLayer(
