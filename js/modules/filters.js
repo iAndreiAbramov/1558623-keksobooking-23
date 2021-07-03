@@ -1,3 +1,7 @@
+
+
+const ADS_TO_SHOW = 50;
+
 const setFilterChangeHandler = (formSelector) => {
   const form = document.querySelector(formSelector);
   const filterInputs = form.querySelectorAll('input');

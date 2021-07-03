@@ -1,8 +1,4 @@
 // В этой функции будет фильтрация объявлений по параметрам
-const ADS_TO_SHOW = 10;
-
-const filterAds = (adsArray) => adsArray.slice(0, ADS_TO_SHOW);
-
 const showLoadFailMessage = (message) => {
   const mapCanvas = document.querySelector('.map__canvas');
 
@@ -29,7 +25,7 @@ const showLoadFailMessage = (message) => {
   mapCanvas.appendChild(errorMessageBlock);
 };
 
-const getData = async (url, onSuccess, onError) => {
+const getData = async (url, onError) => {
   const ads = await fetch(url)
     .then((response) => {
       if (response.ok) {
@@ -38,10 +34,9 @@ const getData = async (url, onSuccess, onError) => {
       throw new Error(`Ошибка ${response.status}, не удалось получить данные с сервера...`);
     })
     .then((response) => response.json())
-    .then((data) => onSuccess(data))
     .catch((err) => onError(err.message));
 
   return await ads || [];
 };
 
-export { getData, filterAds, showLoadFailMessage };
+export { getData, showLoadFailMessage };
