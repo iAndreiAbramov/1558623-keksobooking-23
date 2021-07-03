@@ -1,6 +1,7 @@
 import { ADS_NUMBER_TO_SHOW, PriceCategories } from '../settings/settings.js';
 import { renderAdsFromCache } from './map-leaflet.js';
 import { isInRange } from '../services/utils.js';
+import { debounce } from '../services/utils.js';
 
 const form = document.querySelector('.map__filters');
 const filterInputs = form.querySelectorAll('input');
@@ -71,11 +72,11 @@ const filterData = (dataArray, numberOfAds) => {
 
 const setFilterChangeHandler = () => {
   filterInputs.forEach((input) => {
-    input.addEventListener('change', () => renderAdsFromCache(ADS_NUMBER_TO_SHOW));
+    input.addEventListener('change', debounce(() => renderAdsFromCache(ADS_NUMBER_TO_SHOW)));
   });
 
   filterSelects.forEach((select) => {
-    select.addEventListener('change', () => renderAdsFromCache(ADS_NUMBER_TO_SHOW));
+    select.addEventListener('change', debounce(() => renderAdsFromCache(ADS_NUMBER_TO_SHOW)));
   });
 };
 
