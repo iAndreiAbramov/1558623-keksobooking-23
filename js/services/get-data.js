@@ -1,5 +1,7 @@
 // В этой функции будет фильтрация объявлений по параметрам
-const filterAds = (adsArray) => adsArray.slice(0, 10);
+const ADS_TO_SHOW = 10;
+
+const filterAds = (adsArray) => adsArray.slice(0, ADS_TO_SHOW);
 
 const showLoadFailMessage = (message) => {
   const mapCanvas = document.querySelector('.map__canvas');
