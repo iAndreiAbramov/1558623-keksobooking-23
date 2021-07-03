@@ -1,5 +1,12 @@
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+const isInRange = (value, range) => {
+  if (value >= range[0] && value < range[1]) {
+    return true;
+  }
+  return false;
+};
+
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 
@@ -45,4 +52,4 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
-export { isEscEvent, debounce, throttle };
+export { isEscEvent, isInRange, debounce, throttle };

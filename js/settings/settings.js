@@ -12,3 +12,10 @@ export const ADS_NUMBER_TO_SHOW = 10;
 // Url settings
 export const REQUEST_ADS_URL = 'https://23.javascript.pages.academy/keksobooking/data';
 export const SEND_FORM_URL = 'https://23.javascript.pages.academy/keksobooking';
+
+// Housing settings
+export const PriceCategories = {
+  low: [0, 10000],
+  middle: [10000, 50000],
+  high: [50000, Infinity],
+};

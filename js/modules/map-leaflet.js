@@ -98,6 +98,7 @@ const resetMap = () => {
   map.setView(FRAME_CENTER_COORDS, 13);
   mainMarker.setLatLng(FRAME_CENTER_COORDS);
   addressInput.value = `${FRAME_CENTER_COORDS.lat.toFixed(5)}, ${FRAME_CENTER_COORDS.lng.toFixed(5)}`;
+  renderAdsFromCache(ADS_NUMBER_TO_SHOW);
 };
 
 export { loadMap, resetMap, renderAdsFromCache };

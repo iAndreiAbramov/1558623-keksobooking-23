@@ -1,5 +1,6 @@
-import { ADS_NUMBER_TO_SHOW } from '../settings/settings.js';
+import { ADS_NUMBER_TO_SHOW, PriceCategories } from '../settings/settings.js';
 import { renderAdsFromCache } from './map-leaflet.js';
+import { isInRange } from '../services/utils.js';
 
 const form = document.querySelector('.map__filters');
 const filterInputs = form.querySelectorAll('input');
@@ -32,10 +33,11 @@ const filterData = (dataArray, numberOfAds) => {
   const featuresList = getInputsValues();
   const optionsList = getSelectsValues();
 
-  console.log(dataArray);
+  // console.log(dataArray);
+  // console.log(optionsList);
 
   const filteredDataArray = dataArray.filter((item) => {
-    if (!item.offer.features || item.offer.features.length === 0) {
+    if (featuresList.length > 0 && (!item.offer.features || item.offer.features.length === 0)) {
       return false;
     }
     for (const feature of featuresList) {
@@ -43,13 +45,22 @@ const filterData = (dataArray, numberOfAds) => {
         return false;
       }
     }
-
-
-
+    if (optionsList['housing-type'] && optionsList['housing-type'] !== item.offer.type) {
+      return false;
+    }
+    if (optionsList['housing-rooms'] && +optionsList['housing-rooms'] !== +item.offer.rooms) {
+      return false;
+    }
+    if (optionsList['housing-guests'] && +optionsList['housing-guests'] !== +item.offer.guests) {
+      return false;
+    }
+    if (optionsList['housing-price'] && !isInRange(+item.offer.price, PriceCategories[optionsList['housing-price']])) {
+      return false;
+    }
     return true;
   });
 
-  console.log(filteredDataArray);
+  // console.log(filteredDataArray.length);
 
   return filteredDataArray.slice(0, numberOfAds);
 };
