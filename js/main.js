@@ -1,7 +1,8 @@
 import { disableForms } from './modules/init.js';
 import { validateInputs } from './modules/inputs.js';
-import { replaceSubmitHandler, replaceResetHandler, setFilterChangeHandler } from './modules/forms.js';
+import { replaceSubmitHandler, replaceResetHandler  } from './modules/forms.js';
 import  { loadMap } from './modules/map-leaflet.js';
+import { setFilterChangeHandler } from './modules/filters.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   disableForms();
