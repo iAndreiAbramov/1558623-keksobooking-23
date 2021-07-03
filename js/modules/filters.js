@@ -33,9 +33,6 @@ const filterData = (dataArray, numberOfAds) => {
   const featuresList = getInputsValues();
   const optionsList = getSelectsValues();
 
-  // console.log(dataArray);
-  // console.log(optionsList);
-
   const filteredDataArray = dataArray.filter((item) => {
     if (featuresList.length > 0 && (!item.offer.features || item.offer.features.length === 0)) {
       return false;
@@ -60,9 +57,16 @@ const filterData = (dataArray, numberOfAds) => {
     return true;
   });
 
-  // console.log(filteredDataArray.length);
+  const sortedDataArray = filteredDataArray.sort((a, b) => {
+    if (a.offer.features && b.offer.features) {
+      return a.offer.features.length - b.offer.features.length;
+    }
+    return 0;
+  });
 
-  return filteredDataArray.slice(0, numberOfAds);
+  const cutDataArray = sortedDataArray.slice(0, numberOfAds);
+
+  return cutDataArray;
 };
 
 const setFilterChangeHandler = () => {
