@@ -1,5 +1,6 @@
-// В этой функции будет фильтрация объявлений по параметрам
-const filterAds = (adsArray) => adsArray.slice(0, 10);
+import { REQUEST_ADS_URL } from '../settings/settings.js';
+
+const cachedData = [];
 
 const showLoadFailMessage = (message) => {
   const mapCanvas = document.querySelector('.map__canvas');
@@ -27,8 +28,8 @@ const showLoadFailMessage = (message) => {
   mapCanvas.appendChild(errorMessageBlock);
 };
 
-const getData = async (url, onSuccess, onError) => {
-  const ads = await fetch(url)
+const getData = async (onError) => {
+  const ads = await fetch(REQUEST_ADS_URL)
     .then((response) => {
       if (response.ok) {
         return response;
@@ -36,10 +37,15 @@ const getData = async (url, onSuccess, onError) => {
       throw new Error(`Ошибка ${response.status}, не удалось получить данные с сервера...`);
     })
     .then((response) => response.json())
-    .then((data) => onSuccess(data))
+    .then((dataArray) => {
+      dataArray.forEach((item) => {
+        cachedData.push(item);
+      });
+      return dataArray;
+    })
     .catch((err) => onError(err.message));
 
   return await ads || [];
 };
 
-export { getData, filterAds, showLoadFailMessage };
+export { getData, showLoadFailMessage, cachedData };
