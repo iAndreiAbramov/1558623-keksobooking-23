@@ -15,19 +15,19 @@ const validateInputs = (formSelector) => {
   const roomNumber = form.querySelector('#room_number');
   const capacity = form.querySelector('#capacity');
   const capacityOptions = {
-    1: `
+    '1': `
     <option value="1" selected>для 1 гостя</option>
     `,
-    2: `
+    '2': `
     <option value="1" selected>для 1 гостя</option>
     <option value="2">для 2 гостей</option>
     `,
-    3: `
+    '3': `
     <option value="1" selected>для 1 гостя</option>
     <option value="2">для 2 гостей</option>
     <option value="3">для 3 гостей</option>
     `,
-    100: `
+    '100': `
     <option value="0" selected>не для гостей</option>
     `,
   };
