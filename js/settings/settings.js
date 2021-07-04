@@ -19,3 +19,6 @@ export const PriceCategories = {
   middle: [10000, 50000],
   high: [50000, Infinity],
 };
+
+// Image type settings
+export const IMAGE_TYPES = ['.jpg', '.jpeg', '.gif', '.png'];

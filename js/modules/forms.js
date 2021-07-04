@@ -2,7 +2,7 @@ import { resetInputs } from './inputs.js';
 import { postData } from '../services/post-data.js';
 import { showMessage } from './show-status-message.js';
 import { resetMap } from './map-leaflet.js';
-import { SEND_FORM_URL } from '../settings/settings.js';
+import { SEND_FORM_URL, IMAGE_TYPES } from '../settings/settings.js';
 
 const replaceSubmitHandler = (formSelector) => {
   const form = document.querySelector(formSelector);
@@ -36,4 +36,30 @@ const replaceResetHandler = (formSelector) => {
   });
 };
 
-export { replaceSubmitHandler, replaceResetHandler };
+const showImagePreview = (inputSelector, previewBlockSelector, alt, width) => {
+  const input = document.querySelector(inputSelector);
+  const preview = document.querySelector(previewBlockSelector);
+
+  input.addEventListener('change', () => {
+    const img = preview.querySelector('img');
+    const file = input.files[0];
+    const fileName = input.files[0].name;
+    const matches = IMAGE_TYPES.some((type) => fileName.endsWith(type));
+    if (img) {
+      img.remove();
+    }
+    if (matches) {
+      const url = URL.createObjectURL(file);
+      const createdImg = document.createElement('img');
+      preview.style.padding = '0px';
+      preview.style.width = `${width}px`;
+      createdImg.style.width = `${width}px`;
+      createdImg.style.borderRadius = '5px';
+      createdImg.setAttribute('src', url);
+      createdImg.setAttribute('alt', alt);
+      preview.appendChild(createdImg);
+    }
+  });
+};
+
+export { replaceSubmitHandler, replaceResetHandler, showImagePreview };
