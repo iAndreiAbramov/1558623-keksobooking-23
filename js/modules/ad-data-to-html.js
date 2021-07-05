@@ -55,14 +55,14 @@ const adDataToHTML = (offerData) => {
 
   // Вместимость
   const roomsTextCorrection = {
-    1: 'комната',
-    2: 'комнаты',
-    3: 'комнаты',
-    4: 'комнаты',
+    '1': 'комната',
+    '2': 'комнаты',
+    '3': 'комнаты',
+    '4': 'комнаты',
   };
 
   const guestsTextCorrection = {
-    1: 'гостя',
+    '1': 'гостя',
   };
 
   if (!offerData.offer.rooms && !offerData.offer.guests) {

@@ -1,11 +1,6 @@
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const isInRange = (value, rangeArray) => {
-  if (value >= rangeArray[0] && value < rangeArray[1]) {
-    return true;
-  }
-  return false;
-};
+const isInRange = (value, rangeArray) => value >= rangeArray[0] && value < rangeArray[1];
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;

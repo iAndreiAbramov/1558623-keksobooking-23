@@ -65,9 +65,7 @@ const filterData = (dataArray, numberOfAds) => {
     return 0;
   });
 
-  const cutDataArray = sortedDataArray.slice(0, numberOfAds);
-
-  return cutDataArray;
+  return sortedDataArray.slice(0, numberOfAds);
 };
 
 const setFilterChangeHandler = () => {
